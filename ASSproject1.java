@@ -44,6 +44,10 @@ class Car {
                 '}';
     }
 }
+ /**
+     * Add a customer to the rental service.
+     * @param client The client to be added.
+     */
 
 // Class to represent a customer
 class Customer {
@@ -71,6 +75,9 @@ class Customer {
                 '}';
     }
 }
+ /**
+     * Constructor to initialize the rental agency.
+     */
 
 // Class to manage the rental agency's operations
 class RentalAgency {
@@ -89,6 +96,12 @@ class RentalAgency {
     public void addCustomer(Customer customer) {
         customers.add(customer);
     }
+    
+     /**
+     * Find an available vehicle of a specific model.
+     * @param model The model of the car to find.
+     * @return The available car or null if none found.
+     */
 
     public Car findAvailableCar(String model) {
         for (Car car : cars) {
@@ -99,6 +112,12 @@ class RentalAgency {
         return null;
     }
 
+     /**
+     * Rent a vehicle to a client.
+     * @param client The client renting the vehicle.
+     * @param model The model of the vehicle to be rented.
+     * @return True if the vehicle was successfully rented, false otherwise.
+     */
     public boolean rentCar(Customer customer, String model) {
         Car car = findAvailableCar(model);
         if (car != null) {
@@ -136,6 +155,8 @@ class RentalAgency {
 // Main class to run the application
 public class ASSproject1 {
     public static void main(String[] args) {
+        
+         // Creating an instance of the rental service
         RentalAgency rentalAgency = new RentalAgency();
 
         // Adding cars to the rental agency
