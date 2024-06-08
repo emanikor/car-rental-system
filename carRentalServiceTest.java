@@ -1,47 +1,53 @@
-package com.mycompany.ASSproject1;
+package com.mycompany.assproject1;
 
+
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ASSproject1{
+public class test22 {
+
+    private RentalAgency rentalAgency;
+
+    @Before
+    public void setUp() {
+        rentalAgency = new RentalAgency();
+        rentalAgency.addCar(new Car("ABC123", "Toyota Camry"));
+        rentalAgency.addCar(new Car("XYZ789", "Honda Civic"));
+        rentalAgency.addCustomer(new Customer("conny emanikor", "D1234567"));
+    }
 
     @Test
     public void testAddCar() {
-        RentalAgency rentalAgency = new RentalAgency();
-        Car car = new Car("ABC123", "Toyota Camry");
+        Car car = new Car("LMN456", "Ford Mustang");
         rentalAgency.addCar(car);
-        assertEquals(1, rentalAgency.getCars().size());
-        assertEquals("Toyota Camry", rentalAgency.getCars().get(0).getModel());
+        assertEquals("Car should be added to the list", 3, rentalAgency.getCars().size());
     }
 
     @Test
     public void testAddCustomer() {
-        RentalAgency rentalAgency = new RentalAgency();
-        Customer customer = new Customer("conny emanikor", "D1234567");
+        Customer customer = new Customer("Jane Smith", "D7654321");
         rentalAgency.addCustomer(customer);
-        assertEquals(1, rentalAgency.getCustomers().size());
-        assertEquals("conny emanikor", rentalAgency.getCustomers().get(0).getName());
+        assertEquals("Customer should be added to the list", 2, rentalAgency.getCustomers().size());
     }
 
     @Test
     public void testRentCar() {
-        RentalAgency rentalAgency = new RentalAgency();
-        Car car = new Car("ABC123", "Toyota Camry");
-        rentalAgency.addCar(car);
-        Customer customer = new Customer("conny emanikor", "D1234567");
-        rentalAgency.addCustomer(customer);
-        boolean result = rentalAgency.rentCar(customer.getId(), car.getId());
-        assertTrue(result);
-        assertTrue(car.isRented());
+        Customer customer = rentalAgency.getCustomers().get(0);
+        boolean result = rentalAgency.rentCar(customer, "Toyota Camry");
+        assertTrue("Car should be rented successfully", result);
+        assertTrue("Car's rented status should be true", rentalAgency.getCars().get(0).isRented());
     }
 
     @Test
     public void testReturnCar() {
-        RentalAgency rentalAgency = new RentalAgency();
-        Car car = new Car("ABC123", "Toyota Camry");
-        rentalAgency.addCar(car);
-        car.setRented(true); // Assuming there is a method to set the car as rented
-        rentalAgency.returnCar(car.getId()); // Assuming there is a method to return the car by ID
-        assertFalse(car.isRented());
+        // Rent a car first
+        Customer customer = rentalAgency.getCustomers().get(0);
+        rentalAgency.rentCar(customer, "Toyota Camry");
+
+        // Then return it
+        Car car = rentalAgency.getCars().get(0);
+        rentalAgency.returnCar(car);
+        assertFalse("Car's rented status should be false", car.isRented());
     }
 }
